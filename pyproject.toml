@@ -1,0 +1,40 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "godel-ml"
+version = "0.1.0"
+description = "A self-contained, teachable ML project harness for Pi"
+readme = "README.md"
+license = {file = "LICENSE"}
+requires-python = ">=3.11"
+dependencies = []
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Programming Language :: Python :: 3",
+    "Operating System :: MacOS",
+    "Operating System :: POSIX :: Linux",
+]
+
+[project.optional-dependencies]
+tracking = ["mlflow==3.16.0"]
+
+[dependency-groups]
+dev = ["ruff==0.15.6"]
+
+[project.scripts]
+godel = "godel.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+extend-exclude = ["projects", "artifacts", "mlflow", ".godel"]
+
+[tool.ruff.lint]
+select = ["E4", "E7", "E9", "F"]
+# Entrypoints and tests intentionally add the source checkout to sys.path.
+ignore = ["E402"]

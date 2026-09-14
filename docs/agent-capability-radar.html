@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<title>Godel · Agent capability radar</title>
+<link rel="icon" href="data:,">
+<style>
+:root{--bg:#101b22;--panel:#17252d;--line:#34464f;--text:#edf1e9;--muted:#b0c0c6;--accent:#c4ef9a;--ink:#15211b;--warm:#f4d7a1}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:16px/1.55 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}main{max-width:1500px;margin:auto;padding:36px 40px 24px}header{display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line);padding-bottom:22px;gap:20px}.brand{font-weight:750;letter-spacing:.15em}.eyebrow{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}.badge{display:inline-flex;gap:8px;align-items:center;border:1px solid var(--line);border-radius:20px;padding:6px 12px;font-size:12px;color:var(--muted)}.badge:before{content:"";width:7px;height:7px;border-radius:50%;background:var(--warm)}.intro{display:flex;justify-content:space-between;align-items:flex-end;gap:30px;margin:36px 0 28px}h1{font-size:clamp(30px,4vw,48px);font-weight:550;line-height:1.15;letter-spacing:-.04em;margin:9px 0 15px}p{margin:0;color:var(--muted)}.intro p{max-width:620px}.actions{display:flex;gap:9px;flex-wrap:wrap}button,.upload{font:inherit;font-size:13px;cursor:pointer;border:1px solid var(--line);border-radius:8px;background:var(--panel);color:var(--text);padding:10px 14px;text-decoration:none;display:inline-block}button:hover,.upload:hover{border-color:var(--accent)}button:focus-visible,a:focus-visible{outline:3px solid var(--accent);outline-offset:4px}.primary{background:var(--accent);color:var(--ink);border-color:var(--accent);font-weight:650}.metrics{display:grid;grid-template-columns:1.5fr 1fr 1fr 1.2fr;border:1px solid var(--line);border-radius:12px;overflow:hidden;margin-bottom:22px}.metric{padding:16px 20px;min-width:0}.metric+.metric{border-left:1px solid var(--line)}.metric strong{display:block;font-weight:550;font-size:20px;overflow-wrap:anywhere;margin-top:5px}.layout{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(340px,1fr);gap:22px}.card{border:1px solid var(--line);border-radius:14px;background:var(--panel);overflow:hidden}.card-head{display:flex;align-items:center;justify-content:space-between;padding:22px 24px 0;gap:12px}h2{font-size:17px;font-weight:600;margin:0}.legend{font-size:12px;color:var(--muted)}.legend span{display:inline-block;width:9px;height:9px;border-radius:50%;background:var(--accent);margin-right:7px}.radar-wrap{padding:8px 8px 0}svg{display:block;width:100%;height:auto}.chart-note{padding:0 24px 22px;font-size:13px}.chart-note strong{color:var(--text);font-weight:500}.table-wrap{padding:10px 22px 18px;overflow:auto}table{width:100%;border-collapse:collapse;text-align:left;font-size:13px}th{font-size:11px;color:var(--muted);font-weight:500;letter-spacing:.04em;padding:12px 0}td{padding:12px 0;border-top:1px solid var(--line);vertical-align:top}td:first-child{padding-right:12px}td:nth-child(2){font-variant-numeric:tabular-nums;font-weight:600;color:var(--accent);white-space:nowrap}td:last-child{color:var(--muted);padding-left:12px}th:last-child{padding-left:12px}.idx{display:block;font-size:10px;color:var(--muted);letter-spacing:.09em}details{border-top:1px solid var(--line);padding:18px 22px;font-size:13px}summary{cursor:pointer;color:var(--text)}details p{margin-top:12px}.provenance{margin-top:22px;display:grid;grid-template-columns:1fr 1fr;gap:22px}.provenance .card{padding:20px 24px}.provenance p{font-size:13px;margin-top:10px;overflow-wrap:anywhere}footer{display:flex;justify-content:space-between;gap:20px;color:var(--muted);font-size:12px;padding-top:22px}a{color:var(--accent)}#message{min-height:26px;font-size:13px;margin:10px 0;color:var(--warm)}.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}noscript{display:block;padding:20px;color:var(--warm)}
+@media(max-width:1000px){main{padding:24px}.layout{grid-template-columns:1fr}.intro{align-items:flex-start;flex-direction:column}.provenance{grid-template-columns:1fr}.metrics{grid-template-columns:1fr 1fr}.metric:nth-child(3){border-left:0;border-top:1px solid var(--line)}.metric:nth-child(4){border-top:1px solid var(--line)}}
+@media(max-width:520px){main{padding:18px 12px}.intro{margin:26px 0 20px}.metric{padding:12px}.metric strong{font-size:16px}.card-head{padding:18px 16px 0;align-items:flex-start;flex-direction:column}.table-wrap{padding:8px 16px 14px}.chart-note{padding:0 16px 18px}.eyebrow{font-size:10px}footer{flex-direction:column}.legend{font-size:11px}}
+@media print{body{background:white;color:#15211b}main{padding:0}.actions,#message,footer{display:none}.card,.metrics{break-inside:avoid}.layout{grid-template-columns:1fr}.provenance{grid-template-columns:1fr}.card{background:#17252d;color:#edf1e9;print-color-adjust:exact}.metric strong,h1{color:#15211b}}
+</style>
+</head>
+<body>
+<main>
+<header><div class="brand">GODEL <span class="eyebrow">/ CAPABILITIES</span></div><span class="badge" id="status">Awaiting assessment</span></header>
+<section class="intro"><div><div class="eyebrow">Nine pillars · One evidence-backed profile</div><h1>Agent capability radar</h1><p>See where Godel demonstrates strength, where it needs work, and where the evidence is still missing.</p></div><div class="actions"><button type="button" class="primary" id="import">Import profile</button><input type="file" id="file" accept=".json,application/json" hidden><button type="button" id="template">Get JSON template</button><button type="button" id="export">Export SVG</button><button type="button" id="clear">Clear</button></div></section>
+<div id="message" role="status" aria-live="polite">No capability assessment is loaded. No scores have been inferred from software tests.</div>
+<section class="metrics" aria-label="Profile metadata"><div class="metric"><span class="eyebrow">Profile</span><strong id="profile-name">Not yet assessed</strong></div><div class="metric"><span class="eyebrow">Evidence coverage</span><strong id="coverage">0 / 9 pillars</strong></div><div class="metric"><span class="eyebrow">Task attempts</span><strong id="attempts">—</strong></div><div class="metric"><span class="eyebrow">Scope</span><strong id="scope">Unassessed</strong></div></section>
+<div class="layout">
+<section class="card" aria-labelledby="radar-heading"><div class="card-head"><h2 id="radar-heading">Capability profile</h2><div class="legend"><span></span>Observed score · Scale 1–5</div></div><div class="radar-wrap"><svg id="radar" viewBox="0 0 900 740" role="img" aria-labelledby="chart-title chart-desc"></svg></div><p class="chart-note"><strong>Missing scores remain gaps.</strong> A larger shape indicates stronger observed behavior on the selected tasks. It does not establish general capability or promotion eligibility.</p></section>
+<section class="card" aria-labelledby="pillars-heading"><div class="card-head"><h2 id="pillars-heading">The nine pillars</h2><span class="eyebrow">Score / evidence</span></div><div class="table-wrap"><table><caption class="sr-only">Exact scores and evidence coverage for each capability pillar</caption><thead><tr><th scope="col">CAPABILITY</th><th scope="col">/ 5</th><th scope="col">EVIDENCE</th></tr></thead><tbody id="pillars"></tbody></table></div><details><summary>How to read this profile</summary><p>1 · Incorrect behavior left uncorrected<br>2 · Partial handling; substantial intervention<br>3 · Adequate independent handling<br>4 · Robust handling of complications<br>5 · Exceptional verified judgment</p><p>Single-attempt scores are integers. A batch profile shows the median of assessable attempts in one compatible cohort; medians may be fractional. Confidence is reported evidence support, not a calibrated probability.</p><p>The table shows assessed / eligible attempts for each pillar. Unassessed and not-applicable results are never converted to zero.</p></details></section>
+</div>
+<section class="provenance"><div class="card"><h2>Profile provenance</h2><p id="provenance">Import a profile to show its runtime, model, rubric, lesson snapshot and assessment date. Imported metadata is displayed as supplied; this viewer does not verify the underlying evidence.</p><p id="evidence-refs"></p></div><div class="card"><h2>Assess individually. Learn across attempts.</h2><p>Each task attempt gets its own evidence-linked assessment. Batch analysis finds recurring patterns and contradictions. Proposed changes are then tested on fresh baseline and candidate tasks.</p><p>A batch report must keep versions and task families comparable. This chart does not merge profiles or calculate an overall “power” score.</p></div></section>
+<footer><span>Local HTML · No network requests · Nothing uploaded or saved automatically</span><a href="evaluation-system-changes.md">Change report &amp; profile format</a></footer>
+<noscript>This radar needs JavaScript to render. No scores are currently loaded. Enable JavaScript and import an assessment profile to view its nine pillars.</noscript>
+</main>
+<script>
+'use strict';
+const pillars = [
+ ['problem_understanding','Problem Understanding',['Problem','Understanding']],
+ ['data_reasoning','Data Reasoning',['Data Reasoning']],
+ ['modeling','Modeling & ML Knowledge',['Modeling &','ML Knowledge']],
+ ['experimental_reasoning','Experimental Reasoning',['Experimental','Reasoning']],
+ ['evaluation_diagnosis','Evaluation & Diagnosis',['Evaluation &','Diagnosis']],
+ ['engineering','Engineering & Implementation',['Engineering &','Implementation']],
+ ['debugging','Debugging & Recovery',['Debugging &','Recovery']],
+ ['planning_resources','Planning & Resource Management',['Planning &','Resource Management']],
+ ['learning_adaptation','Learning & Adaptation',['Learning &','Adaptation']]
+];
+const $ = id => document.getElementById(id);
+const empty = () => ({schema_version:1,profile_id:'unassessed',title:'Not yet assessed',scope:'unassessed',attempt_count:0,assessed_at:null,runtime_version:null,model:null,rubric_version:null,lesson_snapshot:null,task_families:[],source_assessment_ids:[],dimensions:pillars.map(([id])=>({id,score:null,confidence:null,assessed_attempts:0,eligible_attempts:0,evidence_refs:[]}))});
+let profile = empty();
+const ns='http://www.w3.org/2000/svg';
+function svgElement(tag,attrs={},text){const e=document.createElementNS(ns,tag);for(const [k,v] of Object.entries(attrs))e.setAttribute(k,String(v));if(text!==undefined)e.textContent=text;return e;}
+const point = (i,r) => [450+Math.cos(-Math.PI/2+i*2*Math.PI/9)*r,365+Math.sin(-Math.PI/2+i*2*Math.PI/9)*r];
+const points = r => pillars.map((_,i)=>point(i,r).join(',')).join(' ');
+function text(parent,attrs,value){const node=svgElement('text',attrs,value);parent.append(node);return node;}
+function render(){
+ const svg=$('radar');svg.replaceChildren();
+ svg.append(svgElement('title',{id:'chart-title'},'Godel nine-pillar capability radar'));
+ const observed=profile.dimensions.filter(d=>d.score!==null).length;
+ svg.append(svgElement('desc',{id:'chart-desc'},observed?`${observed} of 9 pillars have imported scores on a 1 to 5 scale. Exact values and evidence counts are in the adjacent table.`:'No assessment loaded. The nine axes are visible, with no scored points or capability polygon.'));
+ svg.append(svgElement('rect',{width:900,height:740,fill:'#17252d'}));
+ for(let ring=1;ring<=5;ring++){
+  svg.append(svgElement('polygon',{points:points(ring*43),fill:'none',stroke:ring===5?'#71858b':'#3b4e58','stroke-width':ring===5?1.5:1}));
+  text(svg,{x:460,y:365-ring*43+5,fill:'#b0c0c6','font-size':12,'font-family':'system-ui'},String(ring));
+ }
+ pillars.forEach(([id,name,lines],i)=>{
+  const [x,y]=point(i,215);svg.append(svgElement('line',{x1:450,y1:365,x2:x,y2:y,stroke:'#3b4e58'}));
+  const [lx,ly]=point(i,254);const anchor=lx>475?'start':lx<425?'end':'middle';
+  const label=svgElement('text',{x:lx,y:ly-((lines.length-1)*9),fill:'#edf1e9','font-size':16,'font-family':'system-ui','text-anchor':anchor});
+  lines.forEach((line,j)=>label.append(svgElement('tspan',{x:lx,dy:j?20:0},line)));svg.append(label);
+ });
+ if(observed===9)svg.append(svgElement('polygon',{'data-layer':'profile',points:profile.dimensions.map((d,i)=>point(i,d.score*43).join(',')).join(' '),fill:'#c4ef9a','fill-opacity':.13,stroke:'#c4ef9a','stroke-width':2.5,'stroke-linejoin':'round'}));
+ else profile.dimensions.forEach((d,i)=>{const next=profile.dimensions[(i+1)%9];if(d.score!==null&&next.score!==null){const [x,y]=point(i,d.score*43),[x2,y2]=point((i+1)%9,next.score*43);svg.append(svgElement('line',{'data-layer':'profile',x1:x,y1:y,x2,y2,stroke:'#c4ef9a','stroke-width':2.5}));}});
+ profile.dimensions.forEach((d,i)=>{if(d.score===null)return;const [cx,cy]=point(i,d.score*43);const dot=svgElement('circle',{'data-score':d.id,cx,cy,r:5,fill:'#c4ef9a',stroke:'#17252d','stroke-width':2});dot.append(svgElement('title',{},`${pillars[i][1]}: ${d.score} / 5; ${d.assessed_attempts} / ${d.eligible_attempts} attempts assessed`));svg.append(dot);});
+ if(!observed){svg.append(svgElement('rect',{x:330,y:333,width:240,height:66,rx:10,fill:'#17252d',stroke:'#53666d'}));text(svg,{x:450,y:359,'text-anchor':'middle',fill:'#edf1e9','font-size':17,'font-family':'system-ui'},'Awaiting evidence');text(svg,{x:450,y:382,'text-anchor':'middle',fill:'#b0c0c6','font-size':12,'font-family':'system-ui'},'No scores assigned');}
+ $('pillars').replaceChildren();
+ pillars.forEach(([id,name],i)=>{const d=profile.dimensions[i],row=document.createElement('tr');const label=document.createElement('td');const num=document.createElement('span');num.className='idx';num.textContent=String(i+1).padStart(2,'0');label.append(num,document.createTextNode(name));const score=document.createElement('td');score.textContent=d.score===null?'—':String(d.score);const evidence=document.createElement('td');evidence.textContent=d.score===null?(profile.scope==='unassessed'?'Awaiting evidence':d.eligible_attempts?`0 / ${d.eligible_attempts} · unassessed`:'Not applicable'):`${d.assessed_attempts} / ${d.eligible_attempts} attempts`;if(d.confidence!==null){const detail=document.createElement('span');detail.style.display='block';detail.textContent=`Confidence ${Math.round(d.confidence*100)}%`;evidence.append(detail);}row.append(label,score,evidence);$('pillars').append(row);});
+ $('profile-name').textContent=profile.title;$('coverage').textContent=`${observed} / 9 pillars`;$('attempts').textContent=profile.attempt_count||'—';$('scope').textContent={unassessed:'Unassessed',attempt:'Single attempt',batch:'Batch · cohort median'}[profile.scope];$('status').textContent=profile.scope==='unassessed'?'Awaiting assessment':observed===9?'Imported · complete profile':'Imported · partial profile';
+ if(profile.scope==='unassessed'){$('provenance').textContent='Import a profile to show its runtime, model, rubric, lesson snapshot and assessment date. Imported metadata is displayed as supplied; this viewer does not verify the underlying evidence.';$('evidence-refs').textContent='';}
+ else{$('provenance').textContent=`Profile ${profile.profile_id} · ${profile.assessed_at} · Runtime ${profile.runtime_version} · Model ${profile.model} · Rubric ${profile.rubric_version} · Lessons ${profile.lesson_snapshot} · Task families: ${profile.task_families.join(', ')}. Evidence is displayed as supplied, not independently verified by this viewer.`;$('evidence-refs').textContent=`Source assessments: ${profile.source_assessment_ids.join(', ')}. Evidence references: ${[...new Set(profile.dimensions.flatMap(d=>d.evidence_refs))].join(', ')||'None supplied'}.`;}
+}
+function validate(value){
+ const fail=message=>{throw new Error(message);};
+ const obj=v=>v!==null&&typeof v==='object'&&!Array.isArray(v);
+ const str=v=>typeof v==='string'&&v.trim().length>0&&v.length<=500;
+ if(!obj(value)||value.schema_version!==1)fail('Expected a radar profile with schema_version 1.');
+ if(!['attempt','batch','unassessed'].includes(value.scope))fail('scope must be attempt, batch, or unassessed.');
+ if(!str(value.profile_id)||!str(value.title))fail('Provide profile_id and title (1–500 characters).');
+ if(!Number.isInteger(value.attempt_count)||value.attempt_count<0)fail('attempt_count must be a nonnegative integer.');
+ if(value.scope==='attempt'&&value.attempt_count!==1)fail('A single-attempt profile must have attempt_count 1.');
+ if(value.scope==='batch'&&value.attempt_count<1)fail('A batch must contain at least one attempt.');
+ if(value.scope==='unassessed'&&value.attempt_count!==0)fail('An unassessed profile must have attempt_count 0.');
+ for(const key of ['task_families','source_assessment_ids'])if(!Array.isArray(value[key])||value[key].length>1000||!value[key].every(str)||new Set(value[key]).size!==value[key].length)fail(`${key} must contain unique nonempty strings.`);
+ if(value.scope!=='unassessed'){
+  for(const key of ['assessed_at','runtime_version','model','rubric_version','lesson_snapshot'])if(!str(value[key]))fail(`Provide ${key} for an assessed profile.`);
+  if(!/^\d{4}-\d{2}-\d{2}T.*(?:Z|[+-]\d{2}:\d{2})$/.test(value.assessed_at)||!Number.isFinite(Date.parse(value.assessed_at)))fail('assessed_at must be an ISO timestamp with timezone.');
+  if(!value.task_families.length||value.source_assessment_ids.length!==value.attempt_count)fail('Provide task_families and one distinct source assessment ID per attempt.');
+ }
+ if(!Array.isArray(value.dimensions)||value.dimensions.length!==9)fail('Provide exactly nine capability dimensions.');
+ const ids=new Set(value.dimensions.map(d=>obj(d)?d.id:null));if(ids.size!==9||!pillars.every(([id])=>ids.has(id)))fail('Dimension IDs must match the nine pillars, with no duplicates.');
+ const dimensions=pillars.map(([id])=>{
+  const d=value.dimensions.find(item=>item.id===id);
+  if(d.score!==null&&(!Number.isFinite(d.score)||d.score<1||d.score>5))fail(`${id}: score must be null or between 1 and 5.`);
+  if(value.scope==='attempt'&&d.score!==null&&!Number.isInteger(d.score))fail(`${id}: a single-attempt score must be an integer.`);
+  if(d.confidence!==null&&(!Number.isFinite(d.confidence)||d.confidence<0||d.confidence>1))fail(`${id}: confidence must be null or between 0 and 1.`);
+  for(const key of ['assessed_attempts','eligible_attempts'])if(!Number.isInteger(d[key])||d[key]<0||d[key]>value.attempt_count)fail(`${id}: invalid ${key}.`);
+  if(d.assessed_attempts>d.eligible_attempts)fail(`${id}: assessed attempts cannot exceed eligible attempts.`);
+  if(!Array.isArray(d.evidence_refs)||d.evidence_refs.length>1000||!d.evidence_refs.every(str))fail(`${id}: evidence_refs must be strings.`);
+  if(d.score!==null&&(!d.assessed_attempts||!d.evidence_refs.length))fail(`${id}: a score requires assessed attempts and evidence references.`);
+  if(d.score===null&&(d.assessed_attempts!==0||d.confidence!==null))fail(`${id}: an unscored pillar must have zero assessed attempts and null confidence.`);
+  return {...d};
+ });
+ return {...value,dimensions};
+}
+function download(content,type,name){const url=URL.createObjectURL(new Blob([content],{type}));const a=document.createElement('a');a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),2000);}
+$('import').addEventListener('click',()=>$('file').click());
+$('file').addEventListener('change',async event=>{const file=event.target.files[0];if(!file)return;try{if(file.size>1024*1024)throw new Error('Profile must be smaller than 1 MiB.');const next=validate(JSON.parse(await file.text()));profile=next;render();$('message').textContent=profile.scope==='unassessed'?'Unassessed template loaded. No scores plotted.':'Profile loaded locally. Scores and evidence references are supplied by the file; no underlying evidence has been verified.';}catch(error){$('message').textContent=`Could not load profile: ${error.message} The previous profile is unchanged.`;}finally{event.target.value='';}});
+$('clear').addEventListener('click',()=>{profile=empty();render();$('message').textContent='Profile cleared. No scores assigned.';});
+$('template').addEventListener('click',()=>download(JSON.stringify(empty(),null,2)+'\n','application/json','godel-radar-profile-template.json'));
+$('export').addEventListener('click',()=>{
+ const copy=$('radar').cloneNode(true);copy.setAttribute('xmlns',ns);copy.setAttribute('viewBox','0 0 900 840');copy.setAttribute('width','900');copy.setAttribute('height','840');copy.querySelector('rect').setAttribute('height','840');
+ const lines=[profile.title,profile.scope==='unassessed'?'Unassessed · No scores assigned':`${profile.scope} · ${profile.attempt_count} attempts · ${profile.assessed_at}`,profile.scope==='unassessed'?'Import an evidence-backed profile to plot capability.':`Runtime: ${profile.runtime_version} · Model: ${profile.model}`,profile.scope==='unassessed'?'Nine capability pillars · Scale 1–5':`Rubric: ${profile.rubric_version} · Imported scores; evidence not verified by viewer.`];
+ lines.forEach((line,i)=>text(copy,{x:30,y:745+i*23,fill:i?'#b0c0c6':'#edf1e9','font-size':i?12:16,'font-family':'system-ui'},line));
+ copy.insertBefore(svgElement('metadata',{},JSON.stringify(profile)),copy.firstChild);
+ download(new XMLSerializer().serializeToString(copy),'image/svg+xml','godel-capability-radar.svg');
+});
+render();
+</script>
+</body>
+</html>

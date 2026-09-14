@@ -1,0 +1,27 @@
+{
+  "name": "godel-ml",
+  "version": "0.1.0",
+  "private": true,
+  "license": "MIT",
+  "description": "A small, teachable ML project harness for Pi",
+  "type": "module",
+  "engines": { "node": ">=22.19.0" },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "start": "python3 bin/godel.py chat",
+    "godel": "python3 bin/godel.py",
+    "format": "prettier --write 'pi/**/*.ts' tests/pi.test.mjs",
+    "format:check": "prettier --check 'pi/**/*.ts' tests/pi.test.mjs",
+    "test": "npm run build && node --test tests/pi.test.mjs",
+    "verify": "npm test && python3 -m unittest discover -s tests -p 'test_*.py' -v"
+  },
+  "dependencies": {
+    "@earendil-works/pi-coding-agent": "0.85.1",
+    "typebox": "1.1.24"
+  },
+  "devDependencies": {
+    "@types/node": "22.15.30",
+    "prettier": "3.5.3",
+    "typescript": "5.8.3"
+  }
+}
