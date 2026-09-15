@@ -11,6 +11,7 @@ import {
   formatSkillsForPrompt,
 } from '@earendil-works/pi-coding-agent';
 import { pythonRequest } from '../dist/pi/bridge.js';
+import { agentStatusWidget } from '../dist/pi/extension.js';
 
 const skillNames = [
   'ml-diagnostics',
@@ -18,6 +19,39 @@ const skillNames = [
   'ml-reproducibility',
   'ml-validation',
 ];
+
+test('agent status widget summarizes completed and current work', () => {
+  assert.deepEqual(
+    agentStatusWidget({
+      summary: 'Inspected the data and established a baseline.',
+      next: 'Diagnose the largest validation errors.',
+      blockers: ['Waiting for target-column confirmation.'],
+    }),
+    [
+      'Done: Inspected the data and established a baseline.',
+      'Working on: Diagnose the largest validation errors.',
+      'Blocked: Waiting for target-column confirmation.',
+    ],
+  );
+
+  assert.deepEqual(agentStatusWidget(null), [
+    'Done: No progress checkpoint yet.',
+    'Working on: Clarify the brief and establish a baseline.',
+  ]);
+  assert.deepEqual(agentStatusWidget({ summary: 'Retained legacy progress.' }), [
+    'Done: Retained legacy progress.',
+    'Working on: No current focus recorded.',
+  ]);
+
+  const compacted = agentStatusWidget({
+    summary: `Finished  the first pass.\n${'x'.repeat(220)}`,
+    next: 'Review results.',
+    blockers: [],
+  });
+  assert.ok(compacted[0].startsWith('Done: Finished the first pass. '));
+  assert.ok(compacted[0].endsWith('…'));
+  assert.equal(compacted[0].length, 186);
+});
 
 test('actual Pi loader registers Godel tools/commands and only explicit resources', async () => {
   const temporary = await mkdtemp(join(tmpdir(), 'godel-pi-'));
