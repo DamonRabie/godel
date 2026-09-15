@@ -7,8 +7,13 @@ import { pythonRequest } from './bridge.js';
 
 type ContextData = {
   project: { name: string; maxRunSeconds: number; maxRunsPerSession: number };
-  checkpoint: { next: string } | null;
+  checkpoint: Checkpoint | null;
   lessons: { id: string; lesson: string; evidence: string }[];
+};
+type Checkpoint = {
+  summary?: string;
+  next?: string;
+  blockers?: string[];
 };
 type Lesson = {
   id: string;
@@ -30,6 +35,26 @@ const evidenceRefs = Type.Optional(
     { maxItems: 32 },
   ),
 );
+function compactWidgetText(value: string | undefined, fallback: string, maxLength = 180) {
+  const compact = value?.replace(/\s+/g, ' ').trim() || fallback;
+  if (compact.length <= maxLength) return compact;
+  return `${compact.slice(0, maxLength - 1).trimEnd()}…`;
+}
+
+export function agentStatusWidget(checkpoint: Checkpoint | null) {
+  const lines = [
+    `Done: ${compactWidgetText(checkpoint?.summary, 'No progress checkpoint yet.')}`,
+    `Working on: ${compactWidgetText(
+      checkpoint?.next,
+      checkpoint ? 'No current focus recorded.' : 'Clarify the brief and establish a baseline.',
+    )}`,
+  ];
+  const blockers = checkpoint?.blockers?.filter((blocker) => blocker.trim()) ?? [];
+  if (blockers.length) {
+    lines.push(`Blocked: ${compactWidgetText(blockers.join('; '), 'None')}`);
+  }
+  return lines;
+}
 
 export default function (pi: ExtensionAPI) {
   async function call(
@@ -88,10 +113,7 @@ export default function (pi: ExtensionAPI) {
       model: ctx.model ? { provider: ctx.model.provider, id: ctx.model.id } : null,
     });
     const data = await refresh(ctx);
-    ctx.ui.setWidget('godel', [
-      `Next: ${data.checkpoint?.next ?? 'Clarify the brief and establish a baseline.'}`,
-      '/project  /runs  /lessons  /teach  /plan  /reflect',
-    ]);
+    ctx.ui.setWidget('godel', agentStatusWidget(data.checkpoint));
   });
 
   pi.on('before_agent_start', async (event, ctx) => {
@@ -156,7 +178,7 @@ export default function (pi: ExtensionAPI) {
     name: 'godel_checkpoint',
     label: 'Save project checkpoint',
     description:
-      'Save observed progress, the next concrete step, and blockers so another session can resume.',
+      'Save major completed progress, the current focus, and blockers so the status widget and another session can resume.',
     parameters: Type.Object({
       summary: shortText(),
       next: shortText(),
@@ -169,10 +191,7 @@ export default function (pi: ExtensionAPI) {
         sessionId: ctx.sessionManager.getSessionId(),
         toolCallId: _id,
       });
-      ctx.ui.setWidget('godel', [
-        `Next: ${params.next}`,
-        '/project  /runs  /lessons  /teach  /plan  /reflect',
-      ]);
+      ctx.ui.setWidget('godel', agentStatusWidget(value));
       return toolResult(value);
     },
   });
