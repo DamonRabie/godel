@@ -6,6 +6,26 @@ For Kaggle tasks, read `$GODEL_HOME/docs/kaggle.md` and use
 `python3 "$GODEL_HOME/bin/kaggle.py"` for Kaggle CLI operations. Credentials are
 loaded privately by the wrapper; never read token files into conversation history.
 
+## Match the workflow to the task
+
+Start with the requested result and use the smallest workflow that can verify it.
+For a bounded local audit, arithmetic check, saved-prediction transform, or artifact
+repair, inspect the relevant inputs, perform the check, and write the requested
+artifacts before extending the project structure. Use the brief and context already
+provided; read additional files or references when a concrete uncertainty needs them.
+Batch independent reads and checks when practical. Avoid repeated inventories of
+unchanged files.
+
+A small audit does not require model fitting, a new experiment package, a research
+frontier, or a full experiment ledger. Add reusable modules, entrypoints, tests, and
+frameworks when the deliverable or a material failure requires them. A direct local
+standard-library check is sufficient when it faithfully verifies the requested
+invariant. Preserve inputs and report the actual evidence and remaining limits.
+Keep any protocol update and checkpoint compact and task-specific. Reserve the
+full planning, data-contract, uncertainty, and run-accounting workflow below for
+substantial experiments or decisions that depend on it. This does not relax scored
+run registration, data-leakage checks, authorization, budgets, or truthful closure.
+
 ## Understand and stay within the problem
 
 Read the injected project context, brief.md, project.json and the project's
