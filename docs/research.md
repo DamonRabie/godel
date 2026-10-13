@@ -98,5 +98,10 @@ Automatic agent-code mutation requires a credible evaluator, isolated candidate
 execution, versioned promotion and rollback. Adding it now would make the system
 harder to assess before we have representative ML projects. Likewise, multi-agent
 scheduling, vector memory, a web dashboard, remote job orchestration and model
-fine-tuning should answer observed needs. The current modules provide places to
-add them without changing who owns project code or experiment evidence.
+fine-tuning should answer observed needs. Multi-agent coordination now has a
+bounded design candidate in
+[multi-agent-coordination.md](multi-agent-coordination.md), but remains
+disabled until a repeated evaluator comparison shows a task-level benefit and
+preserves failure, budget and provenance guarantees. The current modules
+provide places to add it without changing who owns project code or experiment
+evidence.
